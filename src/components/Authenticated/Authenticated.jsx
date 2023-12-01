@@ -4,15 +4,21 @@ import { BadgeAlert, Trash2 } from "lucide-react";
 import { filterTasks, sortTasks } from "./utils";
 import { useAuth } from "../../contexts/authContext";
 import Button from "../Button/Button";
-import { createTask, getTasks } from "../../services/tasks";
+import {
+  createTask,
+  deleteTask,
+  editTask,
+  getTasks,
+} from "../../services/tasks";
 
 function Authenticated() {
   const { isAuthenticated, logout } = useAuth();
   const [status, setStatus] = React.useState("idle");
   const [formStatus, setFormStatus] = React.useState("idle");
   const [tasks, setTasks] = React.useState([]);
-
+  const [edit, setEdit] = React.useState(false);
   React.useEffect(() => {
+    console.log(tasks);
     setStatus("loading");
     getTasks()
       .then((tasks) => {
@@ -25,7 +31,7 @@ function Authenticated() {
         setStatus("error");
         console.log(error);
       });
-  }, [isAuthenticated]);
+  }, [isAuthenticated, edit]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -36,8 +42,6 @@ function Authenticated() {
     // crear task
     createTask(taskData)
       .then((body) => {
-        // console.log(body);
-        // console.log(tasks);
         const nextTasks = [...tasks, body];
         setTasks(nextTasks);
         setFormStatus("success");
@@ -143,16 +147,29 @@ function Authenticated() {
                   </div>
                 </div>
                 <div className={s.actions}>
-                  <button
+                  <Button
+                    size="icon"
+                    variant={task.important ? "primary" : "secondary"}
                     onClick={() => {
-                      /* completar */
+                      setStatus("loading");
+                      editTask(task.id, { important: !task.important }).then(
+                        (body) => {
+                          setEdit(!edit);
+                          setStatus("success");
+                        }
+                      );
                     }}
                   >
                     <BadgeAlert />
-                  </button>
+                  </Button>
                   <button
                     onClick={() => {
                       /* completar */
+                      setStatus("loading");
+                      deleteTask(task.id).then((body) => {
+                        setEdit(!edit)
+                        setStatus("success")
+                      });
                     }}
                   >
                     <Trash2 />
