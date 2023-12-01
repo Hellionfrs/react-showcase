@@ -36,14 +36,14 @@ function Authenticated() {
     // crear task
     createTask(taskData)
       .then((body) => {
-        console.log(body);
-        console.log(tasks);
+        // console.log(body);
+        // console.log(tasks);
         const nextTasks = [...tasks, body];
         setTasks(nextTasks);
         setFormStatus("success");
       })
       .catch((error) => {
-        setFormStatus("error")
+        setFormStatus("error");
         console.log(error);
       });
   }
