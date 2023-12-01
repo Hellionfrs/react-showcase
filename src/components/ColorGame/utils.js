@@ -11,6 +11,11 @@ export function rgbString(color) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
+export function colorSplit(color) {
+  const [r,g,b] = color;
+  return [r,g,b]
+}
+
 export function getRandomColors(n) {
   return [...Array(n)].map(() => getRandomColor());
 }

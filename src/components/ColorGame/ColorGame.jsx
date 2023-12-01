@@ -3,21 +3,26 @@ import s from "./ColorGame.module.css";
 import { getRandomColors, getStatus, rgbString, statusMessage } from "./utils";
 
 function ColorGame() {
-  let numOfColors = 6;
-  let colors = getRandomColors(numOfColors);
-  let attempts = [];
+  const [numOfColors, setNumOfColors] = React.useState(6); //variable de estado onChange
+  const [colors, setColors] = React.useState(getRandomColors(numOfColors));
+  const [attempts, setAttempts] = React.useState([]);
 
-  const target = Math.floor(Math.random() * colors.length);
-
+  const target = Math.floor(Math.random() * colors.length); //random num del 0 al numero de colores
+  console.log("num of color", numOfColors)
+  console.log("colors", colors)
+  console.log("attemps", attempts)
   function handleReset() {
-    attempts = [];
-    colors = getRandomColors(numOfColors);
+    setAttempts([]);
+    setColors(getRandomColors(numOfColors)); // [ [num, num, num], ....[],[] ]
   }
 
   function handleChangeNumber(event) {
-    numOfColors = event.target.value;
-    attempts = [];
-    colors = getRandomColors(numOfColors);
+    let nextNumOfColors = Number(event.target.value);
+    console.log("handle number change to:",nextNumOfColors)
+    setNumOfColors(nextNumOfColors)
+    setAttempts([]);
+    console.log(getRandomColors(nextNumOfColors))
+    setColors(getRandomColors(nextNumOfColors));
   }
 
   const status = getStatus(attempts, target, numOfColors);
@@ -29,7 +34,11 @@ function ColorGame() {
         Guess which color correspond to the following RGB code
       </p>
 
-      <div className={s["rgb-wrapper"]}>{rgbString(colors[target])}</div>
+      <div className={s["rgb-wrapper"]}>
+        <div className={s.rgb} style={{borderColor: `rgb(${colors[target][0]},0,0)`}}>{colors[target][0]}</div>
+        <div className={s.rgb} style={{borderColor: `rgb(0,${colors[target][1]},0)`}}>{colors[target][1]}</div>
+        <div className={s.rgb} style={{borderColor: `rgb(0,0,${colors[target][2]})`}}>{colors[target][2]}</div>
+      </div>
       <div className={s.dashboard}>
         <div className={s["number-input"]}>
           <label htmlFor="colors"># Colors</label>
