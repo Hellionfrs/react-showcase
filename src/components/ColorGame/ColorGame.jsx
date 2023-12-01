@@ -1,13 +1,16 @@
 import * as React from "react";
 import s from "./ColorGame.module.css";
 import { getRandomColors, getStatus, rgbString, statusMessage } from "./utils";
+import Button from "../Button/Button";
 
 function ColorGame() {
   const [numOfColors, setNumOfColors] = React.useState(6); //variable de estado onChange
   const [colors, setColors] = React.useState(getRandomColors(numOfColors));
   const [attempts, setAttempts] = React.useState([]);
 
-  const [target, setTarget] = React.useState(Math.floor(Math.random() * colors.length)); //random num del 0 al numero de colores
+  const [target, setTarget] = React.useState(
+    Math.floor(Math.random() * colors.length)
+  ); //random num del 0 al numero de colores
   console.log("num of color", numOfColors);
   console.log("colors", colors);
   console.log("attemps", attempts);
@@ -21,8 +24,7 @@ function ColorGame() {
     console.log("handle number change to:", nextNumOfColors);
     setNumOfColors(nextNumOfColors);
     setAttempts([]);
-    console.log(getRandomColors(nextNumOfColors));
-    setColors(getRandomColors(nextNumOfColors));
+    setColors(getRandomColors(nextNumOfColors));  
   }
 
   const status = getStatus(attempts, target, numOfColors);
@@ -68,17 +70,18 @@ function ColorGame() {
           />
         </div>
         <p className={s["game-status"]}>{statusMessage[status]}</p>
-        <button onClick={handleReset}>Reset</button>
+        <Button onClick={handleReset} >Reset</Button>
       </div>
       <div className={s.squares}>
         {colors.map((color, index) => {
-          const backgroundColor = rgbString(color);
+          const backgroundColor = status !== "playing" ? rgbString(colors[target]):rgbString(color);
           const opacity = attempts.includes(index) ? "0" : "100";
 
           return (
             <button
               key={index}
               style={{ backgroundColor, opacity }}
+              disabled={status !== "playing"}
               onClick={() => {
                 /* completar */
                 const nextAttemps = [...attempts, index];
