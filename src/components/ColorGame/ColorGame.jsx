@@ -7,10 +7,10 @@ function ColorGame() {
   const [colors, setColors] = React.useState(getRandomColors(numOfColors));
   const [attempts, setAttempts] = React.useState([]);
 
-  const target = Math.floor(Math.random() * colors.length); //random num del 0 al numero de colores
-  console.log("num of color", numOfColors)
-  console.log("colors", colors)
-  console.log("attemps", attempts)
+  const [target, setTarget] = React.useState(Math.floor(Math.random() * colors.length)); //random num del 0 al numero de colores
+  console.log("num of color", numOfColors);
+  console.log("colors", colors);
+  console.log("attemps", attempts);
   function handleReset() {
     setAttempts([]);
     setColors(getRandomColors(numOfColors)); // [ [num, num, num], ....[],[] ]
@@ -18,10 +18,10 @@ function ColorGame() {
 
   function handleChangeNumber(event) {
     let nextNumOfColors = Number(event.target.value);
-    console.log("handle number change to:",nextNumOfColors)
-    setNumOfColors(nextNumOfColors)
+    console.log("handle number change to:", nextNumOfColors);
+    setNumOfColors(nextNumOfColors);
     setAttempts([]);
-    console.log(getRandomColors(nextNumOfColors))
+    console.log(getRandomColors(nextNumOfColors));
     setColors(getRandomColors(nextNumOfColors));
   }
 
@@ -35,9 +35,24 @@ function ColorGame() {
       </p>
 
       <div className={s["rgb-wrapper"]}>
-        <div className={s.rgb} style={{borderColor: `rgb(${colors[target][0]},0,0)`}}>{colors[target][0]}</div>
-        <div className={s.rgb} style={{borderColor: `rgb(0,${colors[target][1]},0)`}}>{colors[target][1]}</div>
-        <div className={s.rgb} style={{borderColor: `rgb(0,0,${colors[target][2]})`}}>{colors[target][2]}</div>
+        <div
+          className={s.rgb}
+          style={{ borderColor: `rgb(${colors[target][0]},0,0)` }}
+        >
+          {colors[target][0]}
+        </div>
+        <div
+          className={s.rgb}
+          style={{ borderColor: `rgb(0,${colors[target][1]},0)` }}
+        >
+          {colors[target][1]}
+        </div>
+        <div
+          className={s.rgb}
+          style={{ borderColor: `rgb(0,0,${colors[target][2]})` }}
+        >
+          {colors[target][2]}
+        </div>
       </div>
       <div className={s.dashboard}>
         <div className={s["number-input"]}>
@@ -66,6 +81,8 @@ function ColorGame() {
               style={{ backgroundColor, opacity }}
               onClick={() => {
                 /* completar */
+                const nextAttemps = [...attempts, index];
+                setAttempts(nextAttemps);
               }}
               className={s.square}
             ></button>
