@@ -4,39 +4,18 @@ import { BadgeAlert, Trash2 } from "lucide-react";
 import { filterTasks, sortTasks } from "./utils";
 import { useAuth } from "../../contexts/authContext";
 import Button from "../Button/Button";
-
-const exampleTasks = [
-  {
-    id: 1234567,
-    title: "Tarea de ejemplo 1",
-    due_date: null,
-    important: false,
-    completed: true,
-    user_id: 1111,
-  },
-  {
-    id: 1234568,
-    title: "Tarea de ejemplo 2",
-    due_date: "2023-12-01",
-    important: true,
-    completed: true,
-    user_id: 1111,
-  },
-  {
-    id: 1234569,
-    title: "Tarea de ejemplo 3",
-    due_date: "2023-12-02",
-    important: false,
-    completed: false,
-    user_id: 1111,
-  },
-];
+import { createTask, getTasks } from "../../services/tasks";
 
 function Authenticated() {
   const { logout } = useAuth();
   const [status, setStatus] = React.useState("idle");
   const [formStatus, setFormStatus] = React.useState("idle");
-  const [tasks, setTasks] = React.useState(exampleTasks);
+  const [tasks, setTasks] = React.useState([]);
+
+  const inicialTasks = getTasks();
+  inicialTasks
+    .then((tasks) => setTasks(tasks))
+    .catch((error) => console.log(error));
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -44,6 +23,7 @@ function Authenticated() {
     const taskData = Object.fromEntries(formData.entries());
 
     // crear task
+    createTask(taskData).catch((error) => console.log(error));
   }
 
   async function handleEdit(id, updates) {
@@ -106,10 +86,12 @@ function Authenticated() {
               <label htmlFor="important">Only important</label>
             </div>
           </div>
-          <Button variant="secondary" size="sm"
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => {
               /* completar */
-              logout()
+              logout();
             }}
           >
             Logout
