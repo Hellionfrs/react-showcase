@@ -1,7 +1,7 @@
 import * as React from "react";
 import { baseUrl, tokenKey } from "../constants";
 
-const authContext = React.createContext({
+export const authContext = React.createContext({
   isAuthenticated: false,
   login: () => {},
   logout: () => {},
@@ -70,7 +70,11 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(false);
   }
 
-  return <authContext.Provider>{children}</authContext.Provider>;
+  return (
+    <authContext.Provider value={{ isAuthenticated, login, signup, logout }}>
+      {children}
+    </authContext.Provider>
+  );
 }
 
 export function useAuth() {
