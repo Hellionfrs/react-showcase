@@ -3,6 +3,7 @@ import s from "./Authenticated.module.css";
 import { BadgeAlert, Trash2 } from "lucide-react";
 import { filterTasks, sortTasks } from "./utils";
 import { useAuth } from "../../contexts/authContext";
+import Button from "../Button/Button";
 
 const exampleTasks = [
   {
@@ -105,14 +106,14 @@ function Authenticated() {
               <label htmlFor="important">Only important</label>
             </div>
           </div>
-          <button
+          <Button variant="secondary" size="sm"
             onClick={() => {
               /* completar */
               logout()
             }}
           >
             Logout
-          </button>
+          </Button>
         </aside>
         <div className={s["tasks-list"]}>
           {isLoading && <p>Loading...</p>}
