@@ -47,7 +47,9 @@
 }
 .secondary:disabled {
 }
-
+.deleting{
+  background: var(--red-400);
+}
 .outline {
   border: 1px solid var(--border, #d4d4d4);
   background: var(--background, #fff);

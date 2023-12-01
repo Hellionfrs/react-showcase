@@ -135,6 +135,13 @@ function Authenticated() {
                     checked={task.completed}
                     onChange={() => {
                       /* completar */
+                      setStatus("loading");
+                      editTask(task.id, { completed: !task.completed }).then(
+                        (body) => {
+                          setEdit(!edit);
+                          setStatus("success");
+                        }
+                      );
                     }}
                   />
                   <div className={s["title-wrapper"]}>
@@ -162,7 +169,7 @@ function Authenticated() {
                   >
                     <BadgeAlert />
                   </Button>
-                  <button
+                  <Button size="icon" variant={"secondary"}
                     onClick={() => {
                       /* completar */
                       setStatus("loading");
@@ -173,7 +180,7 @@ function Authenticated() {
                     }}
                   >
                     <Trash2 />
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
