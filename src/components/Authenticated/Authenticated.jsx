@@ -16,7 +16,6 @@ function Authenticated() {
   const [status, setStatus] = React.useState("idle");
   const [formStatus, setFormStatus] = React.useState("idle");
   const [tasks, setTasks] = React.useState([]);
-  const [edit, setEdit] = React.useState(false);
   React.useEffect(() => {
     console.log(tasks);
     setStatus("loading");
@@ -31,7 +30,7 @@ function Authenticated() {
         setStatus("error");
         console.log(error);
       });
-  }, [isAuthenticated, edit]);
+  }, [isAuthenticated]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -85,9 +84,9 @@ function Authenticated() {
           aria-label="due_date"
           disabled={isCreating}
         />
-        <button disabled={isCreating}>
+        <Button disabled={isCreating}>
           {isCreating ? "Adding..." : "Add task"}
-        </button>
+        </Button>
       </form>
 
       <div className={s["tasks-wrapper"]}>
@@ -138,7 +137,15 @@ function Authenticated() {
                       setStatus("loading");
                       editTask(task.id, { completed: !task.completed }).then(
                         (body) => {
-                          setEdit(!edit);
+                          let fakeTask = tasks;
+                          let filterTask = fakeTask.filter(
+                            (t) => t.id !== task.id
+                          );
+                          let newTask = fakeTask.find((t) => t.id === task.id);
+                          newTask.completed = !newTask.completed;
+                          let newTasks = [...filterTask, newTask];
+                          setTasks(newTasks);
+                          // setEdit(!edit);
                           setStatus("success");
                         }
                       );
@@ -161,7 +168,15 @@ function Authenticated() {
                       setStatus("loading");
                       editTask(task.id, { important: !task.important }).then(
                         (body) => {
-                          setEdit(!edit);
+                          let fakeTask = tasks;
+                          let filterTask = fakeTask.filter(
+                            (t) => t.id !== task.id
+                          );
+                          let newTask = fakeTask.find((t) => t.id === task.id);
+                          newTask.important = !newTask.important;
+                          let newTasks = [...filterTask, newTask];
+                          setTasks(newTasks);
+                          // setEdit(!edit);
                           setStatus("success");
                         }
                       );
@@ -169,13 +184,21 @@ function Authenticated() {
                   >
                     <BadgeAlert />
                   </Button>
-                  <Button size="icon" variant={"secondary"} style={{background: `var(--red-400)`}}
+                  <Button
+                    size="icon"
+                    variant={"secondary"}
+                    style={{ background: `var(--red-400)` }}
                     onClick={() => {
                       /* completar */
                       setStatus("loading");
                       deleteTask(task.id).then((body) => {
-                        setEdit(!edit)
-                        setStatus("success")
+                        let fakeTask = tasks;
+                        let filterTask = fakeTask.filter(
+                          (t) => t.id !== task.id
+                        );
+                        setTasks([...filterTask]);
+                        // setEdit(!edit)
+                        setStatus("success");
                       });
                     }}
                   >
