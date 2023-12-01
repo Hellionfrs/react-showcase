@@ -169,7 +169,7 @@ function Authenticated() {
                   >
                     <BadgeAlert />
                   </Button>
-                  <Button size="icon" variant={"secondary"}
+                  <Button size="icon" variant={"secondary"} style={{background: `var(--red-400)`}}
                     onClick={() => {
                       /* completar */
                       setStatus("loading");
