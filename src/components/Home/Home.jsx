@@ -1,7 +1,10 @@
 import s from "./Home.module.css";
+import { PageContext } from "../App/App";
 import reactIconUrl from "../../assets/react-icon-lg.svg";
+import { useContext } from "react";
 
 function Home() {
+  const { setPage } = useContext(PageContext);
   return (
     <div className={s.wrapper}>
       <img src={reactIconUrl} />
@@ -11,6 +14,7 @@ function Home() {
         <button
           onClick={() => {
             /* completar */
+            setPage("/color-game")
           }}
         >
           Color Game
@@ -18,6 +22,7 @@ function Home() {
         <button
           onClick={() => {
             /* completar */
+            setPage("/doable")
           }}
         >
           Doable
