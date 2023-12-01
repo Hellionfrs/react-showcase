@@ -7,23 +7,45 @@ import Button from "../Button/Button";
 import { createTask, getTasks } from "../../services/tasks";
 
 function Authenticated() {
-  const { logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const [status, setStatus] = React.useState("idle");
   const [formStatus, setFormStatus] = React.useState("idle");
   const [tasks, setTasks] = React.useState([]);
 
-  const inicialTasks = getTasks();
-  inicialTasks
-    .then((tasks) => setTasks(tasks))
-    .catch((error) => console.log(error));
+  React.useEffect(() => {
+    setStatus("loading");
+    getTasks()
+      .then((tasks) => {
+        // setFormStatus("loading");
+        setTasks(tasks);
+        setStatus("success");
+        console.log("executing task");
+      })
+      .catch((error) => {
+        setStatus("error");
+        console.log(error);
+      });
+  }, [isAuthenticated]);
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setFormStatus("loading");
     const formData = new FormData(event.target);
     const taskData = Object.fromEntries(formData.entries());
 
     // crear task
-    createTask(taskData).catch((error) => console.log(error));
+    createTask(taskData)
+      .then((body) => {
+        console.log(body);
+        console.log(tasks);
+        const nextTasks = [...tasks, body];
+        setTasks(nextTasks);
+        setFormStatus("success");
+      })
+      .catch((error) => {
+        setFormStatus("error")
+        console.log(error);
+      });
   }
 
   async function handleEdit(id, updates) {
