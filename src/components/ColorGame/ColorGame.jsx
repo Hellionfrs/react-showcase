@@ -24,7 +24,7 @@ function ColorGame() {
     console.log("handle number change to:", nextNumOfColors);
     setNumOfColors(nextNumOfColors);
     setAttempts([]);
-    setColors(getRandomColors(nextNumOfColors));  
+    setColors(getRandomColors(nextNumOfColors));
   }
 
   const status = getStatus(attempts, target, numOfColors);
@@ -70,12 +70,18 @@ function ColorGame() {
           />
         </div>
         <p className={s["game-status"]}>{statusMessage[status]}</p>
-        <Button onClick={handleReset} >Reset</Button>
+        <Button onClick={handleReset}>Reset</Button>
       </div>
       <div className={s.squares}>
         {colors.map((color, index) => {
-          const backgroundColor = status !== "playing" ? rgbString(colors[target]):rgbString(color);
-          const opacity = attempts.includes(index) ? "0" : "100";
+          const backgroundColor =
+            status !== "playing" ? rgbString(colors[target]) : rgbString(color);
+          const opacity =
+            status !== "playing"
+              ? "100"
+              : attempts.includes(index)
+              ? "0"
+              : "100";
 
           return (
             <button
