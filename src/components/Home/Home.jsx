@@ -12,18 +12,20 @@ function Home() {
       <h1 className={s.title}>React Evaluation</h1>
       <p className={s.name}>Fredy Rodriguez</p>
       <div className={s.buttons}>
-        <Button variant="outline"
+        <Button
+          variant="outline"
           onClick={() => {
             /* completar */
-            setPage("/color-game")
+            setPage("/color-game");
           }}
         >
           Color Game
         </Button>
-        <Button variant="outline"
+        <Button
+          variant="outline"
           onClick={() => {
             /* completar */
-            setPage("/doable")
+            setPage("/doable");
           }}
         >
           Doable

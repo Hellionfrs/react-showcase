@@ -57,7 +57,7 @@ function Authenticated() {
   }
 
   function handleSortsnFilter() {
-    setStatus("loading")
+    setStatus("loading");
     let onlyPending = pendingRef.current.checked;
     let onlyImportant = importantRef.current.checked;
     setSort(sortRef.current.value);
@@ -65,7 +65,7 @@ function Authenticated() {
       onlyPending,
       onlyImportant,
     });
-    setStatus("success")
+    setStatus("success");
   }
 
   const isLoading = status === "loading";

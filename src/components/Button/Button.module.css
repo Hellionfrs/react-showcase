@@ -47,7 +47,7 @@
 }
 .secondary:disabled {
 }
-.deleting{
+.deleting {
   background: var(--red-400);
 }
 .outline {

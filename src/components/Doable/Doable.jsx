@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { authContext, useAuth } from "../../contexts/authContext";
 
 function Doable() {
-  const {isAuthenticated} = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className={s.wrapper}>

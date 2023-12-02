@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/authContext";
 import Button from "../Button/Button";
 
 function Unauthenticated() {
-  const {login, signup} = useAuth()
+  const { login, signup } = useAuth();
 
   const [status, setStatus] = React.useState("idle");
   const [activeTab, setActiveTab] = React.useState("login");
@@ -18,8 +18,8 @@ function Unauthenticated() {
     // obtener datos del formulario
     const email = userEmail;
     const password = userPassword;
-    console.log("email", userEmail)
-    console.log("password", userPassword)
+    console.log("email", userEmail);
+    console.log("password", userPassword);
     setStatus("loading");
 
     if (activeTab === "login") {
