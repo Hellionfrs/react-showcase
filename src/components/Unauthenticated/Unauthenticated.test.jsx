@@ -4,7 +4,8 @@ import { render, screen } from "@testing-library/react";
 import { expect, test, describe } from "vitest";
 import Unauthenticated from "./Unauthenticated";
 import userEvent from "@testing-library/user-event";
-import "@testing-library/jest-dom/vitest";
+// import "@testing-library/jest-dom/vitest";
+import Authenticated from "../Authenticated/Authenticated";
 
 test("Testing email and password input", async () => {
   const user = userEvent.setup();
@@ -14,6 +15,7 @@ test("Testing email and password input", async () => {
   const emailInput = screen.getByRole("textbox", {
     name: /email/i,
   });
+  // console.log(emailInput)
   const passInput = screen.getByLabelText(/Password/i);
 
   await user.type(
@@ -24,7 +26,8 @@ test("Testing email and password input", async () => {
   );
   await user.type(screen.getByLabelText(/Password/i), userData.password);
   
-  screen.debug();
+  // screen.debug();
   expect(emailInput.value).toBe("testino@testino");
   expect(passInput.value).toBe("secret");
 });
+

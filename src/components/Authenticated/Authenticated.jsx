@@ -82,6 +82,7 @@ function Authenticated() {
           placeholder="do the dishes"
           required
           aria-label="title"
+          data-testid="#input_name"
           disabled={isCreating}
         />
         <input
@@ -89,6 +90,7 @@ function Authenticated() {
           type="date"
           name="due_date"
           aria-label="due_date"
+          data-testid="#due_date"
           disabled={isCreating}
         />
         <Button disabled={isCreating}>
