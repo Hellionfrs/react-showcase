@@ -10,7 +10,7 @@ function Home() {
     <div className={s.wrapper}>
       <img src={reactIconUrl} />
       <h1 className={s.title}>React Evaluation</h1>
-      <p className={s.name}>Nombre Apellido</p>
+      <p className={s.name}>Fredy Rodriguez</p>
       <div className={s.buttons}>
         <Button variant="outline"
           onClick={() => {
