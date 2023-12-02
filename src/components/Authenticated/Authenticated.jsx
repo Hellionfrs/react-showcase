@@ -16,19 +16,25 @@ function Authenticated() {
   const [status, setStatus] = React.useState("idle");
   const [formStatus, setFormStatus] = React.useState("idle");
   const [tasks, setTasks] = React.useState([]);
+  const [sort, setSort] = React.useState("alphabetical-asc");
+  const [filters, setFilters] = React.useState({
+    onlyPending: false,
+    onlyImportant: false,
+  });
+  const pendingRef = React.useRef("");
+  const importantRef = React.useRef("");
+  const sortRef = React.useRef("");
+
   React.useEffect(() => {
-    console.log(tasks);
     setStatus("loading");
     getTasks()
       .then((tasks) => {
         // setFormStatus("loading");
         setTasks(tasks);
         setStatus("success");
-        console.log("executing task");
       })
       .catch((error) => {
         setStatus("error");
-        console.log(error);
       });
   }, [isAuthenticated]);
 
@@ -47,24 +53,25 @@ function Authenticated() {
       })
       .catch((error) => {
         setFormStatus("error");
-        console.log(error);
       });
   }
 
-  async function handleEdit(id, updates) {
-    // editar task
-  }
-
-  async function handleDelete(id) {
-    // eliminar task
+  function handleSortsnFilter() {
+    setStatus("loading")
+    let onlyPending = pendingRef.current.checked;
+    let onlyImportant = importantRef.current.checked;
+    setSort(sortRef.current.value);
+    setFilters({
+      onlyPending,
+      onlyImportant,
+    });
+    setStatus("success")
   }
 
   const isLoading = status === "loading";
   const isCreating = formStatus === "loading";
-
-  const filteredTasks = filterTasks(tasks, {});
-  const sortedTasks = sortTasks(filteredTasks, "");
-
+  const filteredTasks = filterTasks(tasks, filters);
+  const sortedTasks = sortTasks(filteredTasks, sort);
   return (
     <>
       <form className={s["task-form"]} onSubmit={handleSubmit}>
@@ -93,7 +100,7 @@ function Authenticated() {
         <aside className={s.aside}>
           <div className={s["input-group"]}>
             <label htmlFor="sort_by">Sort by</label>
-            <select id="sort_by">
+            <select ref={sortRef} id="sort_by" onChange={handleSortsnFilter}>
               <option value="due_date-asc">Due Date (old first)</option>
               <option value="due_date-desc">Due Date (new first)</option>
               <option value="alphabetical-asc">Alphabetical (a-z)</option>
@@ -101,21 +108,30 @@ function Authenticated() {
             </select>
           </div>
           <div className={s["input-group"]}>
-            <label>Filter</label>
+            <p>Filter</p>
             <div className={s.checkbox}>
-              <input type="checkbox" id="pending" />
-              <label htmlFor="pending">Only pending</label>
+              <input
+                ref={pendingRef}
+                type="checkbox"
+                id="onlyPending"
+                onChange={handleSortsnFilter}
+              />
+              <label htmlFor="onlyPending">Only pending</label>
             </div>
             <div className={s.checkbox}>
-              <input type="checkbox" id="important" />
-              <label htmlFor="important">Only important</label>
+              <input
+                ref={importantRef}
+                type="checkbox"
+                id="onlyImportant"
+                onChange={handleSortsnFilter}
+              />
+              <label htmlFor="onlyImportant">Only important</label>
             </div>
           </div>
           <Button
             variant="secondary"
             size="sm"
             onClick={() => {
-              /* completar */
               logout();
             }}
           >
