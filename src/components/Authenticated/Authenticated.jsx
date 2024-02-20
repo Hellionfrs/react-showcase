@@ -130,15 +130,7 @@ function Authenticated() {
               <label htmlFor="onlyImportant">Only important</label>
             </div>
           </div>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => {
-              logout();
-            }}
-          >
-            Logout
-          </Button>
+          
         </aside>
         <div className={s["tasks-list"]}>
           {isLoading && <p>Loading...</p>}

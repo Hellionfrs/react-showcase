@@ -1,10 +1,8 @@
 import * as React from "react";
 import clsx from "clsx";
 import s from "./App.module.css";
-import Home from "../Home";
-import ColorGame from "../ColorGame";
-import Doable from "../Doable";
-
+import { Link, Outlet } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import reactIconUrl from "../../assets/react-icon.svg";
 import { AuthProvider } from "../../contexts/authContext";
 
@@ -21,45 +19,31 @@ const navigation = [
 
 export const PageContext = React.createContext("/");
 function App() {
-  const [page, setPage] = React.useState("/");
-
   return (
     <AuthProvider>
-      <PageContext.Provider value={{ page, setPage }}>
-        <div className={s.wrapper}>
-          <header className={s.header}>
-            <button
-              className={s.logo}
-              onClick={() => {
-                /* completar */
-                setPage("/");
-              }}
-            >
-              <img src={reactIconUrl} /> React Evaluation
-            </button>
-            <nav className={s.nav}>
-              {navigation.map((item) => (
-                <button
-                  key={item.to}
-                  className={clsx(s["nav-item"], page === item.to && s.current)}
-                  onClick={() => {
-                    /* completar */
-                    setPage(item.to);
-                  }}
-                >
-                  {item.name}
-                </button>
-              ))}
-            </nav>
-          </header>
-          <main className={s.main}>
-            {/* Utiliza la variable 'page' para renderizar solo uno de los siguientes */}
-            {page === "/" && <Home />}
-            {page === "/color-game" && <ColorGame />}
-            {page === "/doable" && <Doable />}
-          </main>
-        </div>
-      </PageContext.Provider>
+      <div className={s.wrapper}>
+        <header className={s.header}>
+          <Link className={s.logo}>
+            <img src={reactIconUrl} />ShowCase
+          </Link>
+          <nav className={s.nav}>
+            {navigation.map((item) => (
+              <NavLink
+                to={item.to}
+                key={item.to}
+                className={clsx(s["nav-item"], ({ isActive, isPending }) =>
+                  isPending ? s.pending : isActive ? s.current : ""
+                )}
+              >
+                {item.name}
+              </NavLink>
+            ))}
+          </nav>
+        </header>
+        <main className={s.main}>
+          <Outlet />
+        </main>
+      </div>
     </AuthProvider>
   );
 }

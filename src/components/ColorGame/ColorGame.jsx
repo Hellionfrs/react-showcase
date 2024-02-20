@@ -8,12 +8,11 @@ function ColorGame() {
   const [colors, setColors] = React.useState(getRandomColors(numOfColors));
   const [attempts, setAttempts] = React.useState([]);
 
-  const [target, setTarget] = React.useState(
-    Math.floor(Math.random() * colors.length)
+  const target = React.useMemo(
+    () => Math.floor(Math.random() * colors.length),
+    [colors]
   ); //random num del 0 al numero de colores
-  console.log("num of color", numOfColors);
-  console.log("colors", colors);
-  console.log("attemps", attempts);
+  console.log("render colorGame", target);
   function handleReset() {
     setAttempts([]);
     setColors(getRandomColors(numOfColors)); // [ [num, num, num], ....[],[] ]
@@ -28,7 +27,7 @@ function ColorGame() {
   }
 
   const status = getStatus(attempts, target, numOfColors);
-
+  const isEnded = status !== "playing";
   return (
     <div className={s.wrapper}>
       <h1 className={s.title}>Color Game</h1>
@@ -74,20 +73,20 @@ function ColorGame() {
       </div>
       <div className={s.squares}>
         {colors.map((color, index) => {
-          const backgroundColor =
-            status !== "playing" ? rgbString(colors[target]) : rgbString(color);
-          const opacity =
-            status !== "playing"
-              ? "100"
-              : attempts.includes(index)
-              ? "0"
-              : "100";
+          const backgroundColor = isEnded
+            ? rgbString(colors[target])
+            : rgbString(color);
+          const opacity = isEnded
+            ? "100"
+            : attempts.includes(index)
+            ? "0"
+            : "100";
 
           return (
             <button
               key={index}
               style={{ backgroundColor, opacity }}
-              disabled={status !== "playing"}
+              disabled={isEnded}
               onClick={() => {
                 /* completar */
                 const nextAttemps = [...attempts, index];

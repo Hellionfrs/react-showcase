@@ -1,35 +1,21 @@
 import s from "./Home.module.css";
-import { PageContext } from "../App/App";
 import reactIconUrl from "../../assets/react-icon-lg.svg";
-import { useContext } from "react";
 import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 function Home() {
-  const { setPage } = useContext(PageContext);
   return (
     <div className={s.wrapper}>
       <img src={reactIconUrl} />
-      <h1 className={s.title}>React Evaluation</h1>
+      <h1 className={s.title}>React Show Case</h1>
       <p className={s.name}>Fredy Rodriguez</p>
       <div className={s.buttons}>
-        <Button
-          variant="outline"
-          onClick={() => {
-            /* completar */
-            setPage("/color-game");
-          }}
-        >
-          Color Game
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            /* completar */
-            setPage("/doable");
-          }}
-        >
-          Doable
-        </Button>
+        <Link to="/color-game" style={{ textDecorationLine: "none" }}>
+          <Button variant="outline">Color Game</Button>
+        </Link>
+        <Link to="/doable" style={{ textDecorationLine: "none" }}>
+          <Button variant="outline">Doable</Button>
+        </Link>
       </div>
     </div>
   );
