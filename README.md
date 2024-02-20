@@ -4,7 +4,8 @@
 </p>
 
 ### 📑 [Summary]()
-React-ShowCase is a web application showcasing a collection of React components and features implemented using Vite for a fast and efficient development experience. The project leverages React Router for endpoint structuring, allowing users to navigate seamlessly through different components.
+[React-ShowCase](https://courageous-twilight-21a9e1.netlify.app/) is a web application showcasing a collection of React components and features implemented using Vite for a fast and efficient development experience. The project leverages React Router for endpoint structuring, allowing users to navigate seamlessly through different components.
+Try it [here](https://courageous-twilight-21a9e1.netlify.app/)
 ### 💡 [Features]()
 1. React Router Integration:
 
@@ -55,8 +56,8 @@ Explore these features to get a comprehensive understanding of the capabilities 
 
 ### 🏠 [Homepage](TODO)
 
-### ✨ [Demo](TODO)
-
+### ✨ [Demo](https://courageous-twilight-21a9e1.netlify.app/)
+Give it a try is already deployed using Netlify
 ## Install
 
 ```sh
