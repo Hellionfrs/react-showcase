@@ -6,11 +6,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ColorGame from "./components/ColorGame";
 import Doable from "./components/Doable";
 import Home from "./components/Home";
+import ErrorPage from "./components/Error/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
