@@ -54,10 +54,8 @@ Try it [here](https://courageous-twilight-21a9e1.netlify.app/)
   
 Explore these features to get a comprehensive understanding of the capabilities and functionalities offered by React-ShowCase!
 
-### 🏠 [Homepage](TODO)
-
 ### ✨ [Demo](https://courageous-twilight-21a9e1.netlify.app/)
-Give it a try is already deployed using Netlify
+Give it a try is already deployed using Netlify [Click here](https://courageous-twilight-21a9e1.netlify.app/)
 ## Install
 
 ```sh
